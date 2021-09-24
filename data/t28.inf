@@ -1,0 +1,11 @@
+[t28]
+FileName1=t28.htm
+URL1=http://localhost:1080/cgi-bin/login.pl?intro=true
+Total=1
+ContentType=text/html
+SnapshotXmlFile=snapshot_28.xml
+RequestHeaderFile=t28_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t28_ResponseHeader.txt
+[ProtocolInfo]
+ProtocolId=QTWeb

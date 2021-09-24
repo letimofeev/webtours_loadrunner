@@ -1,0 +1,11 @@
+[t29]
+FileName1=t29.htm
+URL1=http://localhost:1080/cgi-bin/welcome.pl?page=itinerary
+Total=1
+ContentType=text/html
+SnapshotXmlFile=snapshot_29.xml
+RequestHeaderFile=t29_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t29_ResponseHeader.txt
+[ProtocolInfo]
+ProtocolId=QTWeb

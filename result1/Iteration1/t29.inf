@@ -1,0 +1,36 @@
+[t29]
+RequestBodyFile=t29_RequestBody.txt
+URL10=http://localhost:1080/WebTours/images/mer_login.gif
+URL11=http://localhost:1080/WebTours/images/webtours.png
+URL12=http://localhost:1080/WebTours/images/hp_logo.png
+SaveSnapshotResources=1
+FileName11=t5_1_webtours.png
+FileName10=t8_2_mer_login.gif
+FileName12=t4_0_hp_logo.png
+RequestHeaderFile=t29_RequestHeader.txt
+RawStepStartTime=1632496635000
+ContentType=text/html
+RawStepName=Itinerary Button
+ResponseHeaderFile=t29_ResponseHeader.txt
+RawStepEndTime=0
+SnapshotXmlFile=snapshot_29.xml
+Total=12
+URL1=http://localhost:1080/cgi-bin/welcome.pl?page=itinerary
+URL2=http://localhost:1080/WebTours/images/bookanother.gif
+URL3=http://localhost:1080/WebTours/images/button_next.gif
+URL4=http://localhost:1080/WebTours/images/in_flights.gif
+URL5=http://localhost:1080/WebTours/images/home.gif
+FileName1=t29.html
+URL6=http://localhost:1080/WebTours/images/flights.gif
+URL7=http://localhost:1080/WebTours/images/in_home.gif
+FileName3=t21_9_button_next.gif
+URL8=http://localhost:1080/WebTours/images/itinerary.gif
+URL9=http://localhost:1080/WebTours/images/signoff.gif
+FileName2=t25_10_bookanother.gif
+FileName5=t20_7_home.gif
+FileName4=t19_8_in_flights.gif
+FileName7=t12_5_in_home.gif
+FileName6=t13_6_flights.gif
+FileName9=t14_3_signoff.gif
+FileName8=t15_4_itinerary.gif
+StepName=Url: Itinerary Button

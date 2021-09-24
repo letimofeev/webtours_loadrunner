@@ -1,0 +1,86 @@
+[
+    {
+        "stepId": "STEP1",
+        "stepName": "Url: WebTours",
+        "infFile": "t1.inf",
+        "time": 1632496632913
+    },
+    {
+        "stepId": "STEP2",
+        "stepName": "Url: mer_login.gif",
+        "infFile": "t8.inf",
+        "time": 1632496633315
+    },
+    {
+        "stepId": "STEP3",
+        "stepName": "Submit Data: login.pl",
+        "infFile": "t9.inf",
+        "time": 1632496633469
+    },
+    {
+        "stepId": "STEP4",
+        "stepName": "Url: Search Flights Button",
+        "infFile": "t16.inf",
+        "time": 1632496633849
+    },
+    {
+        "stepId": "STEP5",
+        "stepName": "Url: button_next.gif",
+        "infFile": "t21.inf",
+        "time": 1632496634096
+    },
+    {
+        "stepId": "STEP6",
+        "stepName": "Submit Data: reservations.pl_2",
+        "infFile": "t22.inf",
+        "time": 1632496634267
+    },
+    {
+        "stepId": "STEP7",
+        "stepName": "Submit Data: reservations.pl_3",
+        "infFile": "t23.inf",
+        "time": 1632496634410
+    },
+    {
+        "stepId": "STEP8",
+        "stepName": "Submit Data: reservations.pl_4",
+        "infFile": "t24.inf",
+        "time": 1632496634566
+    },
+    {
+        "stepId": "STEP9",
+        "stepName": "Url: bookanother.gif",
+        "infFile": "t25.inf",
+        "time": 1632496634629
+    },
+    {
+        "stepId": "STEP10",
+        "stepName": "Url: Home Button",
+        "infFile": "t26.inf",
+        "time": 1632496634749
+    },
+    {
+        "stepId": "STEP11",
+        "stepName": "Url: Itinerary Button",
+        "infFile": "t29.inf",
+        "time": 1632496635061
+    },
+    {
+        "stepId": "STEP12",
+        "stepName": "Url: in_itinerary.gif",
+        "infFile": "t32.inf",
+        "time": 1632496635254
+    },
+    {
+        "stepId": "STEP13",
+        "stepName": "Custom Request: itinerary.pl_2",
+        "infFile": "t35.inf",
+        "time": 1632496636868
+    },
+    {
+        "stepId": "STEP14",
+        "stepName": "Url: SignOff Button",
+        "infFile": "t36.inf",
+        "time": 1632496637003
+    }
+]

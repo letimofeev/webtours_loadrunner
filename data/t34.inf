@@ -1,0 +1,11 @@
+[t34]
+FileName1=t34_cancelreservation.gif
+URL1=http://localhost:1080/WebTours/images/cancelreservation.gif
+Total=1
+ContentType=image/gif
+SnapshotXmlFile=snapshot_34.xml
+RequestHeaderFile=t34_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t34_ResponseHeader.txt
+[ProtocolInfo]
+ProtocolId=QTWeb
