@@ -1,11 +1,7 @@
 [vuser_init]
 SnapshotIndex=I1_vuser_init
-[Logout]
-SnapshotIndex=I1_Logout
 [Action]
 SnapshotIndex=I1_Action
-[Library]
-SnapshotIndex=I1_Library
 [Login]
 SnapshotIndex=I1_Login
 [vuser_end]

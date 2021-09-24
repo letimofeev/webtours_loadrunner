@@ -34,12 +34,14 @@ int getParamCount(char* paramName)
 	return atoi(paramCountStr);
 }
 
-getCancelReservationRequestBody(char* flightIdParamName, char* numsToDeleteStr, char* argName)
+getCancelReservationRequestBody(char* flightIdParamName, char* cgiFieldParamName, char* numsToDeleteStr, char* argName)
 {
-	char requestBody[1024] = "";
+	char requestBody[4096] = "";
 	char sep[] = ",";
 	char flightIdParamNameWithNumber[64];
 	char flightId[64];
+	char cgiFieldParamNameWithNumber[64];
+	char cgiField[64];
 	char numToDeleteStr[64];
 	int* numsToDeleteIntArr;
 	int numsToDeleteSize;
@@ -81,6 +83,16 @@ getCancelReservationRequestBody(char* flightIdParamName, char* numsToDeleteStr, 
 	
 	strcat(requestBody, "removeFlights.x=53&removeFlights.y=11"); 
 	
+	for (i=1;i<=elemCount;++i)
+	{
+		strcat(requestBody, "&");
+		sprintf(cgiFieldParamNameWithNumber, "{%s_%d}", cgiFieldParamName, i);
+    	sprintf(cgiField, "%s", lr_eval_string(cgiFieldParamNameWithNumber));
+    	
+		strcat(requestBody, ".cgifields=");
+	    strcat(requestBody, cgiField);		
+	}
+	
 	lr_save_string(requestBody, argName);
 
 	free(numsToDeleteIntArr);
@@ -88,12 +100,12 @@ getCancelReservationRequestBody(char* flightIdParamName, char* numsToDeleteStr, 
 	return 0;
 }
 
-getCancelLastReservationRequestBody(char* flightIdParamName, char* argName) 
+getCancelLastReservationRequestBody(char* flightIdParamName, char* cgiFlightParamName, char* argName) 
 {	
 	char numLast[64];
 	
 	sprintf(numLast, "%d", getParamCount(flightIdParamName));	
-	getCancelReservationRequestBody(flightIdParamName, numLast, argName);
+	getCancelReservationRequestBody(flightIdParamName, cgiFlightParamName, numLast, argName);
 	
 	return 0;
 }

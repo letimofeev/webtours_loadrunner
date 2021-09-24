@@ -68,7 +68,7 @@ vuser_end=cci
 [TransactionsOrder]
 Order="02_OpenFlightsSearchPage__*delimiter*__03_SearchFlight__*delimiter*__04_SelectFlight__*delimiter*__05_FillPaymentDetails__*delimiter*__06_ReturnStartPage__*delimiter*__07_OpenReservationList__*delimiter*__08_CancelReservation__*delimiter*__00_OpenStartPage__*delimiter*__01_Login__*delimiter*__09_Logout"
 [StateManagement]
-LastReplayStatus=1
+LastReplayStatus=3
 [ActiveReplay]
 LastReplayedRunName=result1
 ActiveRunName=result1

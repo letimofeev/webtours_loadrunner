@@ -268,6 +268,14 @@
 	    SEARCH_FILTERS,
 	    "Scope=body",
 		LAST);
+	
+	web_reg_save_param_ex("ParamName=CGIFIELD", 
+	    "LB=name=\".cgifields\" value=\"",
+	    "RB=\"",
+	    "Ordinal=all",
+	    SEARCH_FILTERS,
+	    "Scope=body",
+		LAST);
 
 	web_url("itinerary.pl", 
 		"URL=http://{HOST}:{PORT}/cgi-bin/itinerary.pl", 
@@ -319,7 +327,7 @@
 	
 	// getCancelReservationRequestBody("FLIGHT_ID", "2,4", "CANCEL_RESERVATION_REQUEST_BODY");
 	
-	getCancelLastReservationRequestBody("FLIGHT_ID", "CANCEL_RESERVATION_REQUEST_BODY");
+	getCancelLastReservationRequestBody("FLIGHT_ID", "CGIFIELD", "CANCEL_RESERVATION_REQUEST_BODY");
 	
 	getCancelReservationVerificationText("FLIGHT_ID", 1, "CANCEL_RESERVATION_VERIFICATION_TEXT");
 	
