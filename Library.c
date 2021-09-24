@@ -31,6 +31,7 @@ int getParamCount(char* paramName)
 	
 	sprintf(paramNameWithCount, "{%s_count}", paramName);
 	sprintf(paramCountStr, "%s", lr_eval_string(paramNameWithCount));
+	
 	return atoi(paramCountStr);
 }
 
@@ -128,6 +129,28 @@ getCancelReservationVerificationText(char* flightIdParamName, int deletedNum, ch
 	}
 	
 	lr_save_string(verificationText, argName);
+	
+	return 0;
+}
+
+getCitiesPair(char* citiesParamName, char* departCityParamName, char* arriveCityParamName) 
+{
+	char departCityParam[32];
+	char arriveCityParam[32];
+	
+	for(;;)
+	{
+		lr_save_string(lr_paramarr_random(citiesParamName), departCityParamName);
+		lr_save_string(lr_paramarr_random(citiesParamName), arriveCityParamName);
+		
+		sprintf(departCityParam, "{%s}", departCityParamName);
+		sprintf(arriveCityParam, "{%s}", arriveCityParamName);
+		
+		if (departCityParam != arriveCityParam)
+		{
+			break;
+		}
+	}
 	
 	return 0;
 }

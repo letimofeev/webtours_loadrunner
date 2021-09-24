@@ -1,5 +1,7 @@
 ﻿Action()
 {
+	web_set_max_html_param_len("512");
+	
 	// ----------------------------------------Open flights page----------------------------------------
 	
 	lr_think_time(5);  // time before pressing the button "flights"
@@ -24,6 +26,14 @@
 		"Referer=http://{HOST}:{PORT}/cgi-bin/welcome.pl?page=search", 
 		"Snapshot=t17.inf", 
 		"Mode=HTTP", 
+		LAST);
+	
+	web_reg_save_param_ex("ParamName=CITIES", 
+	    "LB=\">",
+	    "RB=</option>",
+	    "Ordinal=all",
+	    SEARCH_FILTERS,
+	    "Scope=body",
 		LAST);
 
 	web_url("reservations.pl", 
@@ -68,28 +78,13 @@
 	lr_end_transaction("02_OpenFlightsSearchPage",LR_AUTO);
 	
 
+	getCitiesPair("CITIES", "OUTBOUND_RANDOM", "RETURN_RANDOM");
 	
 	// ----------------------------------------Search flight----------------------------------------
 	
 	lr_think_time(15);  // time of filling out the ticket search form
 	
 	lr_start_transaction("03_SearchFlight");
-	
-	web_reg_save_param_ex("ParamName=OUTBOUND_FLIGHT", 
-	    "LB=name=\"outboundFlight\" value=\"",
-	    "RB=\"",
-	    "Ordinal=1",
-	    SEARCH_FILTERS,
-	    "Scope=body",
-		LAST);
-	
-	web_reg_save_param_ex("ParamName=RETURN_FLIGHT", 
-	    "LB=name=\"returnFlight\" value=\"",
-	    "RB=\"",
-	    "Ordinal=1",
-	    SEARCH_FILTERS,
-	    "Scope=body",
-		LAST);
 
 	web_submit_data("reservations.pl_2", 
 		"Action=http://{HOST}:{PORT}/cgi-bin/reservations.pl", 
@@ -132,8 +127,8 @@
 		"Snapshot=t23.inf", 
 		"Mode=HTTP", 
 		ITEMDATA, 
-		"Name=outboundFlight", "Value={OUTBOUND_FLIGHT}", ENDITEM,  // 000;0;09/21/2021 
-		"Name=returnFlight", "Value={RETURN_FLIGHT}", ENDITEM,  // 003;0;09/22/2021
+		"Name=outboundFlight", "Value={OUTBOUND_RANDOM}", ENDITEM,  // 000;0;09/21/2021 
+		"Name=returnFlight", "Value={RETURN_RANDOM}", ENDITEM,  // 003;0;09/22/2021
 		"Name=numPassengers", "Value=1", ENDITEM, 
 		"Name=advanceDiscount", "Value=0", ENDITEM, 
 		"Name=seatType", "Value={SEAT_TYPE}", ENDITEM, 
@@ -175,9 +170,9 @@
 		"Name=numPassengers", "Value=1", ENDITEM, 
 		"Name=seatType", "Value={SEAT_TYPE}", ENDITEM, 
 		"Name=seatPref", "Value={SEAT_PREF}", ENDITEM, 
-		"Name=outboundFlight", "Value={OUTBOUND_FLIGHT}", ENDITEM,  // 000;0;09/21/2021 
+		"Name=outboundFlight", "Value={OUTBOUND_RANDOM}", ENDITEM,  // 000;0;09/21/2021 
 		"Name=advanceDiscount", "Value=0", ENDITEM, 
-		"Name=returnFlight", "Value={RETURN_FLIGHT}", ENDITEM,  // 003;0;09/22/2021
+		"Name=returnFlight", "Value={RETURN_RANDOM}", ENDITEM,  // 003;0;09/22/2021
 		"Name=JSFormSubmit", "Value=off", ENDITEM, 
 		"Name=.cgifields", "Value=saveCC", ENDITEM, 
 		"Name=buyFlights.x", "Value=42", ENDITEM, 
@@ -318,18 +313,18 @@
 
 	lr_end_transaction("07_OpenReservationList",LR_AUTO);
 
+	
+	// getCancelReservationRequestBody("FLIGHT_ID", "2,4", "CANCEL_RESERVATION_REQUEST_BODY");	
+	
+	getCancelLastReservationRequestBody("FLIGHT_ID", "CGIFIELD", "CANCEL_RESERVATION_REQUEST_BODY");
+	
+	getCancelReservationVerificationText("FLIGHT_ID", 1, "CANCEL_RESERVATION_VERIFICATION_TEXT");
 
 	// ----------------------------------------Cancel reservation----------------------------------------
 	
 	lr_think_time(5);  // time of cancellation of the selected flight
 	
 	lr_start_transaction("08_CancelReservation");
-	
-	// getCancelReservationRequestBody("FLIGHT_ID", "2,4", "CANCEL_RESERVATION_REQUEST_BODY");
-	
-	getCancelLastReservationRequestBody("FLIGHT_ID", "CGIFIELD", "CANCEL_RESERVATION_REQUEST_BODY");
-	
-	getCancelReservationVerificationText("FLIGHT_ID", 1, "CANCEL_RESERVATION_VERIFICATION_TEXT");
 	
 	lr_output_message("Verification text: %s", lr_eval_string("{CANCEL_RESERVATION_VERIFICATION_TEXT}"));
 
@@ -347,8 +342,8 @@
 		"Body={CANCEL_RESERVATION_REQUEST_BODY}",
 		LAST);
 
-	lr_end_transaction("08_CancelReservation",LR_AUTO);
-
-
+	lr_end_transaction("08_CancelReservation", LR_AUTO);
+	
+	
 	return 0;
 }
