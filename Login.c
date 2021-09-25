@@ -56,6 +56,11 @@
 	web_concurrent_end(NULL);
 
 	web_concurrent_start(NULL);
+	
+	web_reg_find("Fail=NotFound",
+		"Search=Body",
+		"Text=Welcome to the Web Tours site.",
+		LAST);
 
 	web_url("home.html", 
 		"URL=http://{HOST}:{PORT}/WebTours/home.html", 

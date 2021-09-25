@@ -328,21 +328,26 @@
 	web_concurrent_end(NULL);
 
 	lr_end_transaction("07_OpenReservationList",LR_AUTO);
-
+	
+	
+	// ----------------------------------------Create request body----------------------------------------
+	
+	lr_start_transaction("07_1_CreateCancelReservationRequestBody");
 	
 	// getCancelReservationRequestBody("FLIGHT_ID", "2,4", "CANCEL_RESERVATION_REQUEST_BODY");	
 	
 	getCancelLastReservationRequestBody("FLIGHT_ID", "CGIFIELD", "CANCEL_RESERVATION_REQUEST_BODY");
 	
 	getCancelReservationVerificationText("FLIGHT_ID", 1, "CANCEL_RESERVATION_VERIFICATION_TEXT");
+	
+	lr_end_transaction("07_1_CreateCancelReservationRequestBody", LR_AUTO);
+
 
 	// ----------------------------------------Cancel reservation----------------------------------------
 	
 	lr_think_time(5);  // time of cancellation of the selected flight
 	
 	lr_start_transaction("08_CancelReservation");
-	
-	lr_output_message("Verification text: %s", lr_eval_string("{CANCEL_RESERVATION_VERIFICATION_TEXT}"));
 
 	web_reg_find("Fail=NotFound",
 		"Search=Body",

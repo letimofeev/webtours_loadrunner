@@ -7,19 +7,16 @@ int splitStringToNumArr(char* str, char* seps, int** nums)
 {
 	char* token;
 	char* strCopy = (char*)strdup(str);
-	int* res = NULL;
     int i = 0;
     
     token = (char*)strtok(strCopy, seps);
    
     while(token != NULL)
     {
-    	res = (int*)realloc(res, sizeof(int) * ++i);
-        res[i - 1] = atoi(token);
+    	*nums = (int*)realloc(*nums, sizeof(int) * ++i);
+        *nums[i - 1] = atoi(token);
         token = (char*)strtok(NULL, seps);
     }
-    
-    *nums = res;
     
     return i;
 }
@@ -118,7 +115,7 @@ getCancelReservationVerificationText(char* flightIdParamName, int deletedNum, ch
 	
 	sprintf(elemCountStr, "%d", getParamCount(flightIdParamName)-deletedNum);
 	
-	if (elemCountStr == "0") 
+	if (elemCountStr[0] == '0')
 	{
 		sprintf(verificationText, "No flights have been reserved.");
 	}
