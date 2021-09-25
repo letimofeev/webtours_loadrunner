@@ -78,13 +78,29 @@
 	lr_end_transaction("02_OpenFlightsSearchPage",LR_AUTO);
 	
 
-	getCitiesPair("CITIES", "OUTBOUND_RANDOM", "RETURN_RANDOM");
+	getCitiesPair("CITIES", "DEPART_CITY", "ARRIVE_CITY");
 	
 	// ----------------------------------------Search flight----------------------------------------
 	
 	lr_think_time(15);  // time of filling out the ticket search form
 	
 	lr_start_transaction("03_SearchFlight");
+	
+	web_reg_save_param_ex("ParamName=OUTBOUND_FLIGHT", 
+	    "LB=name=\"outboundFlight\" value=\"",
+	    "RB=\"",
+	    "Ordinal=1",
+	    SEARCH_FILTERS,
+	    "Scope=body",
+		LAST);
+	
+	web_reg_save_param_ex("ParamName=RETURN_FLIGHT", 
+	    "LB=name=\"returnFlight\" value=\"",
+	    "RB=\"",
+	    "Ordinal=1",
+	    SEARCH_FILTERS,
+	    "Scope=body",
+		LAST);
 
 	web_submit_data("reservations.pl_2", 
 		"Action=http://{HOST}:{PORT}/cgi-bin/reservations.pl", 
@@ -95,9 +111,9 @@
 		"Mode=HTTP", 
 		ITEMDATA, 
 		"Name=advanceDiscount", "Value=0", ENDITEM, 
-		"Name=depart", "Value=Denver", ENDITEM, 
+		"Name=depart", "Value={DEPART_CITY}", ENDITEM, 
 		"Name=departDate", "Value={DEPART_DATE}", ENDITEM,  // 09/21/2021
-		"Name=arrive", "Value=Denver", ENDITEM, 
+		"Name=arrive", "Value={ARRIVE_CITY}", ENDITEM, 
 		"Name=returnDate", "Value={RETURN_DATE}", ENDITEM,  // 09/22/2021
 		"Name=numPassengers", "Value=1", ENDITEM, 
 		"Name=roundtrip", "Value=on", ENDITEM, 
@@ -127,8 +143,8 @@
 		"Snapshot=t23.inf", 
 		"Mode=HTTP", 
 		ITEMDATA, 
-		"Name=outboundFlight", "Value={OUTBOUND_RANDOM}", ENDITEM,  // 000;0;09/21/2021 
-		"Name=returnFlight", "Value={RETURN_RANDOM}", ENDITEM,  // 003;0;09/22/2021
+		"Name=outboundFlight", "Value={OUTBOUND_FLIGHT}", ENDITEM,  // 000;0;09/21/2021 
+		"Name=returnFlight", "Value={RETURN_FLIGHT}", ENDITEM,  // 003;0;09/22/2021
 		"Name=numPassengers", "Value=1", ENDITEM, 
 		"Name=advanceDiscount", "Value=0", ENDITEM, 
 		"Name=seatType", "Value={SEAT_TYPE}", ENDITEM, 
@@ -170,9 +186,9 @@
 		"Name=numPassengers", "Value=1", ENDITEM, 
 		"Name=seatType", "Value={SEAT_TYPE}", ENDITEM, 
 		"Name=seatPref", "Value={SEAT_PREF}", ENDITEM, 
-		"Name=outboundFlight", "Value={OUTBOUND_RANDOM}", ENDITEM,  // 000;0;09/21/2021 
+		"Name=outboundFlight", "Value={OUTBOUND_FLIGHT}", ENDITEM,  // 000;0;09/21/2021 
 		"Name=advanceDiscount", "Value=0", ENDITEM, 
-		"Name=returnFlight", "Value={RETURN_RANDOM}", ENDITEM,  // 003;0;09/22/2021
+		"Name=returnFlight", "Value={RETURN_FLIGHT}", ENDITEM,  // 003;0;09/22/2021
 		"Name=JSFormSubmit", "Value=off", ENDITEM, 
 		"Name=.cgifields", "Value=saveCC", ENDITEM, 
 		"Name=buyFlights.x", "Value=42", ENDITEM, 
