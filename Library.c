@@ -3,7 +3,7 @@
 	return 0;
 }
 
-int splitStringToNumArr(char* str, char* seps, int** nums)
+int splitStringToNumArr(char* str, char* seps, int* nums)
 {
 	char* token;
 	char* strCopy = (char*)strdup(str);
@@ -12,10 +12,10 @@ int splitStringToNumArr(char* str, char* seps, int** nums)
     token = (char*)strtok(strCopy, seps);
    
     while(token != NULL)
-    {
-    	*nums = (int*)realloc(*nums, sizeof(int) * ++i);
-        *nums[i - 1] = atoi(token);
+    {	
+        nums[i] = atoi(token);
         token = (char*)strtok(NULL, seps);
+        ++i;
     }
     
     return i;
@@ -41,7 +41,7 @@ getCancelReservationRequestBody(char* flightIdParamName, char* cgiFieldParamName
 	char cgiFieldParamNameWithNumber[64];
 	char cgiField[64];
 	char numToDeleteStr[64];
-	int* numsToDeleteIntArr;
+	int numsToDeleteIntArr[128];
 	int numsToDeleteSize;
 	int added;
 	int elemCount;
@@ -49,7 +49,7 @@ getCancelReservationRequestBody(char* flightIdParamName, char* cgiFieldParamName
 	int j;
 	
 	elemCount = getParamCount(flightIdParamName);
-	numsToDeleteSize = splitStringToNumArr(numsToDeleteStr, sep, &numsToDeleteIntArr);
+	numsToDeleteSize = splitStringToNumArr(numsToDeleteStr, sep, numsToDeleteIntArr);
 	
 	for (i=1;i<=elemCount;++i)
 	{
@@ -92,30 +92,35 @@ getCancelReservationRequestBody(char* flightIdParamName, char* cgiFieldParamName
 	}
 	
 	lr_save_string(requestBody, argName);
-
-	free(numsToDeleteIntArr);
 	
 	return 0;
 }
 
-getCancelLastReservationRequestBody(char* flightIdParamName, char* cgiFlightParamName, char* argName) 
+getCancelLastReservationRequestBody(char* flightIdParamName, char* cgiFlightParamName, char* requestBodyParamName) 
 {	
 	char numLast[64];
 	
 	sprintf(numLast, "%d", getParamCount(flightIdParamName));	
-	getCancelReservationRequestBody(flightIdParamName, cgiFlightParamName, numLast, argName);
+	getCancelReservationRequestBody(flightIdParamName, cgiFlightParamName, numLast, requestBodyParamName);
 	
 	return 0;
 }
 
-getCancelReservationVerificationText(char* flightIdParamName, int deletedNum, char* argName)
+getCancelReservationVerificationText(char* flightIdParamName, char* numsToDeleteStr, char* requestBodyParamName)
 {
-	char verificationText[64] = "";
 	char elemCountStr[64];
+	char verificationText[64] = "";
+	char sep[] = ",";
+	int numsToDeleteIntArr[128];
+	int numsToDeleteSize;
+	int elemCount;
 	
-	sprintf(elemCountStr, "%d", getParamCount(flightIdParamName)-deletedNum);
+	elemCount = getParamCount(flightIdParamName);
+	numsToDeleteSize = splitStringToNumArr(numsToDeleteStr, sep, numsToDeleteIntArr);
 	
-	if (elemCountStr[0] == '0')
+	sprintf(elemCountStr, "%d", elemCount-numsToDeleteSize);
+	
+	if (!strcmp(elemCountStr, "0"))
 	{
 		sprintf(verificationText, "No flights have been reserved.");
 	}
@@ -125,7 +130,17 @@ getCancelReservationVerificationText(char* flightIdParamName, int deletedNum, ch
 		strcat(verificationText, elemCountStr);
 	}
 	
-	lr_save_string(verificationText, argName);
+	lr_save_string(verificationText, requestBodyParamName);
+	
+	return 0;
+}
+
+getCancelLastReservationVerificationText(char* flightIdParamName, char* requestBodyParamName)
+{
+	char numLast[64];
+	
+	sprintf(numLast, "%d", getParamCount(flightIdParamName));	
+	getCancelReservationVerificationText(flightIdParamName, numLast, requestBodyParamName);
 	
 	return 0;
 }
@@ -135,7 +150,7 @@ getCitiesPair(char* citiesParamName, char* departCityParamName, char* arriveCity
 	char departCityParam[32];
 	char arriveCityParam[32];
 	
-	for(;;)
+	for (;;)
 	{
 		lr_save_string(lr_paramarr_random(citiesParamName), departCityParamName);
 		lr_save_string(lr_paramarr_random(citiesParamName), arriveCityParamName);
@@ -143,11 +158,57 @@ getCitiesPair(char* citiesParamName, char* departCityParamName, char* arriveCity
 		sprintf(departCityParam, "{%s}", departCityParamName);
 		sprintf(arriveCityParam, "{%s}", arriveCityParamName);
 		
-		if (departCityParam != arriveCityParam)
+		if (strcmp(lr_eval_string(departCityParam), lr_eval_string(arriveCityParam)))
 		{
 			break;
 		}
 	}
+	
+	return 0;
+}
+
+getRandomNumsToDeleteString(char* flightIdParamName, char* randomNumsParamName) 
+{
+	char numsToDeleteStr[256];
+	char randomIntStr[8];
+	char* tmp;
+	int numsToDeleteIntArr[128];
+	int numsToDeleteSize;
+	int j;
+	int r;
+	int i = 0;
+	int elemCount;
+	int unique;
+	
+	srand(time(NULL));
+	
+	elemCount = getParamCount(flightIdParamName);
+	numsToDeleteSize = rand()%elemCount + 1;
+
+	while (i<numsToDeleteSize)
+	{
+		unique = 1;
+		r = rand()%elemCount + 1;
+		
+		for (j=0;j<numsToDeleteSize;++j)
+		{
+			if (r==numsToDeleteIntArr[j])
+			{
+				unique = 0;
+			}
+		}
+		
+		if (unique)
+		{
+			tmp = (i==numsToDeleteSize-1) ? "%d" : "%d,";
+			sprintf(randomIntStr, tmp, r);		
+			strcat(numsToDeleteStr, randomIntStr);
+			numsToDeleteIntArr[i] = r;
+			++i;
+		}
+	}
+	
+	lr_save_string(numsToDeleteStr, randomNumsParamName);
 	
 	return 0;
 }

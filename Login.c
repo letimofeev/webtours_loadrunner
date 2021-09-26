@@ -1,8 +1,16 @@
 ﻿Login()
 {
+	lr_message(lr_eval_string("{CURRENT_TIME}: [INFO]: Iteration {ITER_NUM} started"));
+	
+	
 	// ----------------------------------------Open start page----------------------------------------
 	
 	lr_start_transaction("00_OpenStartPage");
+	
+	lr_save_string("00_OpenStartPage", "CUR_TRANSACTION_NAME");
+	
+	lr_message(lr_eval_string("{CURRENT_TIME}: [INFO]: Transaction {CUR_TRANSACTION_NAME} started"));
+	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Loading start page..."));
 
 	web_url("WebTours", 
 		"URL=http://{HOST}:{PORT}/WebTours/", 
@@ -97,8 +105,12 @@
 		"Referer=http://{HOST}:{PORT}/cgi-bin/nav.pl?in=home", 
 		"Snapshot=t8.inf", 
 		LAST);
+	
+	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Start page loaded"));
 
 	lr_end_transaction("00_OpenStartPage",LR_AUTO);
+	
+	lr_message(lr_eval_string("{CURRENT_TIME}: [INFO]: Transaction {CUR_TRANSACTION_NAME} ended"));
 	
 	
 	// ----------------------------------------Login----------------------------------------
@@ -106,11 +118,17 @@
 	lr_think_time(10);  // login and password entry time
 	
 	lr_start_transaction("01_Login");
-
+	
+	lr_save_string("01_Login", "CUR_TRANSACTION_NAME");
+	
+	lr_message(lr_eval_string("{CURRENT_TIME}: [INFO]: Transaction {CUR_TRANSACTION_NAME} started"));
+	
 	web_reg_find("Fail=NotFound",
 		"Search=Body",
 		"Text=User password was correct",
 		LAST);
+	
+	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Login start"));
 
 	web_submit_data("login.pl", 
 		"Action=http://{HOST}:{PORT}/cgi-bin/login.pl", 
@@ -185,8 +203,15 @@
 		LAST);
 
 	web_concurrent_end(NULL);
+	
+	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: User logged in with the following data:")); 
+	lr_message(lr_eval_string("    USER SESSION = {USER_SESSION}")); 
+	lr_message(lr_eval_string("    USERNAME     = {USERNAME}"));	
+	lr_message(lr_eval_string("    PASSWORD     = {PASSWORD}"));
 
 	lr_end_transaction("01_Login",LR_AUTO);
+	
+	lr_message(lr_eval_string("{CURRENT_TIME}: [INFO]: Transaction {CUR_TRANSACTION_NAME} ended"));
 	
 	
 	return 0;
