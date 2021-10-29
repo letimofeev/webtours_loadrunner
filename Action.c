@@ -470,27 +470,28 @@
 	lr_save_string("07_1_CreateCancelReservationRequestBody", "CUR_TRANSACTION_NAME");
 	
 	lr_message(lr_eval_string("{CURRENT_TIME}: [INFO]: Transaction {CUR_TRANSACTION_NAME} started"));
-	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Random dialing of reservation numbers for cancellation..."));	
 	
-	getRandomNumsToDeleteString("FLIGHT_ID", "RANDOM_NUMS_TO_CANCEL");
-	
-	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Received the following random set:"));
-	lr_message(lr_eval_string("    NUMBERS OF FLIGHTS TO CANCEL = {RANDOM_NUMS_TO_CANCEL}"));
+//	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Random dialing of reservation numbers for cancellation..."));	
+//	
+//	getRandomNumsToDeleteString("FLIGHT_ID", "RANDOM_NUMS_TO_CANCEL");
+//	
+//	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Received the following random set:"));
+//	lr_message(lr_eval_string("    NUMBERS OF FLIGHTS TO CANCEL = {RANDOM_NUMS_TO_CANCEL}"));
 	
 	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Getting request body for cancel reservation..."));
 	
-	getCancelReservationRequestBody("FLIGHT_ID", "CGIFIELD", lr_eval_string("{RANDOM_NUMS_TO_CANCEL}"), "CANCEL_RESERVATION_REQUEST_BODY");		
+	// getCancelReservationRequestBody("FLIGHT_ID", "CGIFIELD", lr_eval_string("{RANDOM_NUMS_TO_CANCEL}"), "CANCEL_RESERVATION_REQUEST_BODY");		
 	
-	// getCancelLastReservationRequestBody("FLIGHT_ID", "CGIFIELD", "CANCEL_RESERVATION_REQUEST_BODY");
+	getCancelLastReservationRequestBody("FLIGHT_ID", "CGIFIELD", "CANCEL_RESERVATION_REQUEST_BODY");
 	
 	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Received the following request body:"));
 	lr_message(lr_eval_string("    REQUEST BODY = {CANCEL_RESERVATION_REQUEST_BODY}"));
 	
 	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Getting text for cancel reservation verification..."));
 	
-	getCancelReservationVerificationText("FLIGHT_ID", lr_eval_string("{RANDOM_NUMS_TO_CANCEL}"), "CANCEL_RESERVATION_VERIFICATION_TEXT");
+	// getCancelReservationVerificationText("FLIGHT_ID", lr_eval_string("{RANDOM_NUMS_TO_CANCEL}"), "CANCEL_RESERVATION_VERIFICATION_TEXT");
 	
-	// getCancelLastReservationVerificationText("FLIGHT_ID", "CANCEL_RESERVATION_VERIFICATION_TEXT");
+	getCancelLastReservationVerificationText("FLIGHT_ID", "CANCEL_RESERVATION_VERIFICATION_TEXT");
 	
 	lr_message(lr_eval_string("  {CURRENT_TIME}: [INFO]: Received the following verification text:"));
 	lr_message(lr_eval_string("    VERIFICATION TEXT = {CANCEL_RESERVATION_VERIFICATION_TEXT}"));

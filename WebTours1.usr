@@ -38,12 +38,12 @@ Default Profile=default.cfg
 [ExtraFiles]
 globals.h=
 [Modified Actions]
-vuser_init=0
+vuser_init=1
 Action=1
 Login=1
 Logout=1
 Library=1
-vuser_end=0
+vuser_end=1
 [Recorded Actions]
 vuser_init=0
 Action=1
@@ -66,26 +66,28 @@ Logout=cci
 Library=cci
 vuser_end=cci
 [TransactionsOrder]
-Order="02_OpenFlightsSearchPage__*delimiter*__03_SearchFlight__*delimiter*__04_SelectFlight__*delimiter*__05_FillPaymentDetails__*delimiter*__06_ReturnStartPage__*delimiter*__07_OpenReservationList__*delimiter*__08_CancelReservation__*delimiter*__00_OpenStartPage__*delimiter*__01_Login__*delimiter*__09_Logout"
+Order="02_OpenFlightsSearchPage__*delimiter*__02_1_GetDepartureAndArriveCities__*delimiter*__03_SearchFlight__*delimiter*__04_SelectFlight__*delimiter*__05_FillPaymentDetails__*delimiter*__06_ReturnStartPage__*delimiter*__07_OpenReservationList__*delimiter*__07_1_CreateCancelReservationRequestBody__*delimiter*__08_CancelReservation__*delimiter*__00_OpenStartPage__*delimiter*__01_Login__*delimiter*__09_Logout"
 [StateManagement]
-LastReplayStatus=3
+LastReplayStatus=1
 [ActiveReplay]
 LastReplayedRunName=result1
 ActiveRunName=result1
 [Transactions]
 02_OpenFlightsSearchPage=
+02_1_GetDepartureAndArriveCities=
 03_SearchFlight=
 04_SelectFlight=
 05_FillPaymentDetails=
 06_ReturnStartPage=
 07_OpenReservationList=
+07_1_CreateCancelReservationRequestBody=
 08_CancelReservation=
 00_OpenStartPage=
 01_Login=
 09_Logout=
 [ParameterSimulation]
-NumVusers=3
+NumVusers=10
 IsDurationIndefinite=1
 NumIterationsUntilCompletion=10
 IterationFromRTS=0
-NumIterationIndefinitely=15
+NumIterationIndefinitely=10
